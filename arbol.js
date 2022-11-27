@@ -32,45 +32,45 @@ export default class ArbolBinario{
         }
     }
 
-    obtenerPreOrder(){
+    obtenerpreOrden(){
         this.pre = '';
         if(this.raiz !==  null){
-            this.preOrder(this.raiz);
+            this.preOrden(this.raiz);
             return this.pre;
         }else{
             return null;
         }
     }
 
-    preOrder(nodox){
+    preOrden(nodox){
         this.pre+= `${nodox.valor}`; 
 
         if(nodox.izq !== null){
-            this.preOrder(nodox.izq);
+            this.preOrden(nodox.izq);
         }
 
         if(nodox.der !== null){
-            this.preOrder(nodox.der);
+            this.preOrden(nodox.der);
         }
     }
 
-    obtenerPosOrder(){
+    obtenerposOrden(){
         this.pos = '';
         if(this.raiz !==  null){
-            this.posOrder(this.raiz);
+            this.posOrden(this.raiz);
             return this.pos;
         }else{
             return null;
         }
     }
     
-    posOrder(nodox){
+    posOrden(nodox){
         if(nodox.izq !== null){
-            this.posOrder(nodox.izq);
+            this.posOrden(nodox.izq);
         }
 
         if(nodox.der !== null){
-            this.posOrder(nodox.der);
+            this.posOrden(nodox.der);
         }
 
         this.pos+= `${nodox.valor}`; 
