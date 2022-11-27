@@ -1,4 +1,4 @@
-class Nodo{
+export default class Nodo{
     constructor(valor){
         this.valor = valor;
         this.sig = null;
