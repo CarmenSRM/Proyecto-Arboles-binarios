@@ -1,38 +1,231 @@
-import Nodo from './nodos.js';
-import Lista from './lista.js';
-
 export default class ArbolBinario{
     constructor(){
         this.raiz = null;
+        this.primero = null;
+        this.ultimo = null;
         this.pre = '';
         this.pos = '';
     }
 
-    crear(nodo){
-        if(this.raiz === null){
-            this.raiz = nodo;
+    agregarValores(valor){
+        if(this.primero === null){
+            this.primero = valor;
+            this.ultimo = valor;
         }else{
-            this.agregar(nodo, this.raiz);
+            this.ultimo.sig = valor;
+            valor.ant = this.ultimo;;
+            this.ultimo = valor;
         }
     }
-    
-    agregar(nodo, nodox){
-        if(nodo.valor < nodox.valor){
-            if(nodox.izq == null){
-                nodox.izq = nodo;
-            }else{
-                this.agregar(nodo, nodox.izq)
+
+    mostrarLista(){
+        if(this.primero !== null){
+            let actual = this.primero;
+            let lista = "";  
+            while(actual !== null){
+                lista= `${lista}  ${actual.valor}`;
+                actual = actual.sig;
             }
-        }else{
-            if(nodox.der === null){
-                nodox.der = nodo;
-            }else{
-                this.agregar(nodo, nodox.der);
+            return lista;
+        }    
+    }
+
+    ordenar(){
+        if(this.raiz === null){
+            if(this.primero !== null){
+                let actual = this.primero;
+                while(actual !== null){
+                    this.multDiv(actual);
+                    actual = actual.sig;
+                }
+
+                actual = this.primero;
+                
+                while(actual !== null){
+                    this.sumasRestas(actual);
+                    actual = actual.sig;
+                }
             }
         }
     }
 
-    obtenerpreOrden(){
+    multDiv(nodo){
+        if(nodo !== this.primero){
+            if(nodo.ant !== this.primero){
+                if(nodo !== this.ultimo){
+                    if(nodo.sig !== this.ultimo){
+                        if(nodo.valor === '*'){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = nodo.sig.sig;
+                            nodo.ant.sig = nodo;
+                            nodo.sig.ant = nodo;
+                        }else if(nodo.valor === '/'){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = nodo.sig.sig;
+                            nodo.ant.sig = nodo;
+                            nodo.sig.ant = nodo;
+                        }
+                    }else{
+                        if(nodo.valor === '*' ){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = null;
+                            nodo.ant.sig = nodo;
+                            this.ultimo = nodo;
+                        }else if(nodo.valor === '/'){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = null;
+                            nodo.ant.sig = nodo;
+                            this.ultimo = nodo;
+                        }
+                    }
+                }else{
+                    if(nodo.valor === '*'){
+                        nodo.izq = nodo.ant;
+                        nodo.ant = nodo.ant.ant;
+                        nodo.ant.sig = nodo;
+                    }else if(nodo.valor === '/'){
+                        nodo.izq = nodo.ant
+                        nodo.ant = nodo.ant.ant;
+                        nodo.ant.sig = nodo;
+                    }
+                }
+            }else{
+                if(nodo.valor === '*'){
+                    nodo.izq = nodo.ant;
+                    nodo.der = nodo.sig;
+                    nodo.ant = null;
+                    nodo.sig = nodo.sig.sig;
+                    nodo.sig.ant = nodo;
+                    this.primero = nodo;
+                }else if(nodo.valor === '/'){
+                    nodo.izq = nodo.ant;
+                    nodo.der = nodo.sig;
+                    nodo.ant = null;
+                    nodo.sig = nodo.sig.sig;
+                    nodo.sig.ant = nodo;
+                    this.primero = nodo;
+                }
+            }
+        }else{
+            if(nodo.valor === '*'){
+                nodo.der = nodo.sig;
+                nodo.sig = nodo.sig.sig;
+                nodo.sig.ant = nodo;
+            }else if(nodo.valor === '/'){
+                nodo.der = nodo.sig;
+                nodo.sig = nodo.sig.sig;
+                nodo.sig.ant = nodo;
+            }
+        }
+    }
+
+    sumasRestas(nodo){
+        if(nodo !== this.primero){
+            if(nodo.ant !== this.primero){
+                if(nodo !== this.ultimo){
+                    if(nodo.sig !== this.ultimo){
+                        if(nodo.valor === '+'){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = nodo.sig.sig;
+                            nodo.ant.sig = nodo;
+                            nodo.sig.ant = nodo;
+                        }else if(nodo.valor === '-'){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = nodo.sig.sig;
+                            nodo.ant.sig = nodo;
+                            nodo.sig.ant = nodo;
+                        }
+                    }else{
+                        if(nodo.valor === '+' ){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = null;
+                            nodo.ant.sig = nodo;
+                            this.ultimo = nodo;
+                        }else if(nodo.valor === '-'){
+                            nodo.izq = nodo.ant;
+                            nodo.der = nodo.sig;
+                            nodo.ant = nodo.ant.ant;
+                            nodo.sig = null;
+                            nodo.ant.sig = nodo;
+                            this.ultimo = nodo;
+                        }
+                    }
+                }else{
+                    if(nodo.valor === '+'){
+                        nodo.izq = nodo.ant;
+                        nodo.ant = nodo.ant.ant;
+                        nodo.ant.sig = nodo;
+                    }else if(nodo.valor === '-'){
+                        nodo.izq = nodo.ant
+                        nodo.ant = nodo.ant.ant;
+                        nodo.ant.sig = nodo;
+                    }
+                }
+            }else{
+                if(nodo.sig !== this.ultimo){
+                    if(nodo.valor === '+'){
+                        nodo.izq = nodo.ant;
+                        nodo.der = nodo.sig;
+                        nodo.ant = null;
+                        nodo.sig = nodo.sig.sig;
+                        nodo.sig.ant = nodo;
+                        this.primero = nodo;
+                    }else if(nodo.valor === '-'){
+                        nodo.izq = nodo.ant;
+                        nodo.der = nodo.sig;
+                        nodo.ant = null;
+                        nodo.sig = nodo.sig.sig;
+                        nodo.sig.ant = nodo;
+                        this.primero = nodo;
+                    }
+                }else{
+                    if(nodo.valor === '+'){
+                        nodo.izq = nodo.ant;
+                        nodo.der = nodo.sig;
+                        nodo.ant = null;
+                        nodo.sig = null;
+                        this.primero = nodo;
+                        this.ultimo = nodo;
+                        this.raiz = nodo;
+                    }else if(nodo.valor === '-'){
+                        nodo.izq = nodo.ant;
+                        nodo.der = nodo.sig;
+                        nodo.ant = null;
+                        nodo.sig = null;
+                        this.primero = nodo;
+                        this.ultimo = nodo;
+                        this.raiz = nodo;
+                    }
+                }
+            }
+        }else{
+            if(nodo.valor === '+'){
+                nodo.der = nodo.sig;
+                nodo.sig = nodo.sig.sig;
+                nodo.sig.ant = nodo;
+            }else if(nodo.valor === '-'){
+                nodo.der = nodo.sig;
+                nodo.sig = nodo.sig.sig;
+                nodo.sig.ant = nodo;
+            }
+        }
+    }
+
+    obtenerPreOrden(){
         this.pre = '';
         if(this.raiz !==  null){
             this.preOrden(this.raiz);
@@ -54,7 +247,7 @@ export default class ArbolBinario{
         }
     }
 
-    obtenerposOrden(){
+    obtenerPosOrden(){
         this.pos = '';
         if(this.raiz !==  null){
             this.posOrden(this.raiz);

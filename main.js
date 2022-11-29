@@ -1,38 +1,40 @@
-/*  1.- Resivir una expresión.                   x
+/*  
+    1.- Resivir una expresión.               x
     2.- Separar los valores.                 x    
     3.- Agregar a una lista.                 x
-    4.- Trasformar la lista a un árbol.          x
+    4.- Trasformar la lista a un árbol.      x
     5.- Crear preOrden.                      x
     6.- Crear posOrden.                      x
     7.- Resolver el preOrden.                x
     8.- Resolver el posOrden.                x
 */
 
-import Lista from './lista.js';
 import Nodo from './nodos.js'
 import ArbolBinario from './arbol.js';
 
-let lista =  new Lista();
-/*
 let arbol = new ArbolBinario();
 
-console.log('PreOrden');
-console.log(arbol.obtenerPreOrden());
-console.log('PosOrden');
-console.log(arbol.obtenerPosOrden());
-*/
-
-let ecuacion = '4+2*5-6*4/2';
-
-//console.log(ecuacion);
-
-ecuacion = separarValores(ecuacion);
-//console.log(ecuacion);
-
-//console.log(incluirEnLista(ecuacion));
-//console.log(lista.mostrarLista());
-
+//1
+let ecuacion = '2*8+4+3-2*9/6-3*4/2/2';//'4-2+3*5-8*3/6';//'4+2*5-6*4/2';
+console.log(`Expresión ingresada: ${ecuacion}`);
 //2
+ecuacion = separarValores(ecuacion);
+//3
+console.log(`\nExpresion en lista -> ${incluirEnLista(ecuacion)}`);
+//4
+arbol.ordenar();
+//5
+let preOrden = arbol.obtenerPreOrden(); 
+console.log(`\nPreOrden: ${preOrden}`);
+//6
+let posOrden =  arbol.obtenerPosOrden();
+console.log(`\nPosOrden: ${posOrden}`);
+//7
+console.log(`\nResultado del preOrden: ${resolverPreOrden(preOrden)}`);
+//8
+console.log(`\nResultado del posOrden: ${resolverPosOrden(posOrden)}`);
+
+// 2.- Separar los valores. 
 function separarValores(expresion){
     let operacion = Array.from(expresion);
     for(let i = 0; i< operacion.length; i++){
@@ -49,28 +51,18 @@ function separarValores(expresion){
     }
     return operacion;
 }
-/* 
 
-//3
+// 3.- Agregar a una lista. 
 function incluirEnLista(expresion){
     for(let i = 0; i < expresion.length; i++){
         let valor =  new Nodo(expresion[i]);
-        lista.agregar(valor);
+        arbol.agregarValores(valor);
     }
 
-    return lista.mostrarLista();
+    return arbol.mostrarLista();
 }
-*/
-let preOrden = '++-+4*3269/*369'; 
-//console.log(preOrden);
 
-let posOrden =  '83+62*-35*-43*2*8/+';
-//console.log(posOrden);
-
-console.log(resolverPreOrden(preOrden));
-console.log(resolverPosOrden(posOrden));
-
-//7
+// 7.- Resolver el preOrden.
 function resolverPreOrden(preOrden){
     preOrden = separarValores(preOrden);
     let solucion = [];
@@ -98,10 +90,10 @@ function resolverPreOrden(preOrden){
             solucion.push(operacion);
         }
     }
-    return solucion;
+    return solucion[0];
 }
 
-//8
+// 8.- Resolver el posOrden. 
 function resolverPosOrden(posOrden){
     posOrden = separarValores(posOrden);
     let solucion = [];
@@ -127,5 +119,5 @@ function resolverPosOrden(posOrden){
             solucion.push(operacion);
         }
     }
-    return solucion;
+    return solucion[0];
 }
